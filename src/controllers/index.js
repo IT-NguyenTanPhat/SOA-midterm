@@ -1,1 +1,5 @@
-export const userController = require('./user').default;
+module.exports = {
+	userController: require('./user'),
+	transactionController: require('./transaction'),
+	authController: require('./auth'),
+};
