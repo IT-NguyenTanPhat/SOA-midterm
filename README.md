@@ -1,12 +1,3 @@
-# Section store
-
-- full name
-- email
-- tel
-- available balance
-- otp
-- otp expire at
-
 # Cookie store
 
 - JWT
@@ -26,6 +17,7 @@
 - email
 - available balance
 - transaction history
+- tuition fee
 
 # Transaction Collection
 
@@ -34,7 +26,6 @@
 - pay for (student id)
 - money
 - created at
-- status (optional)
 
 # Logic
 
