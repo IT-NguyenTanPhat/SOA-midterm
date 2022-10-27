@@ -1,32 +1,34 @@
 {
-	"name": "mid-term",
-	"version": "0.0.0",
-	"private": true,
-	"scripts": {
-		"start": "nodemon ./bin/www",
-		"create-demo-data": "node demo-data",
-		"debug": "ndb ./bin/www",
-		"test": "jest"
-	},
-	"dependencies": {
-		"bcryptjs": "^2.4.3",
-		"cookie-parser": "~1.4.4",
-		"debug": "~2.6.9",
-		"dotenv": "^16.0.3",
-		"express": "~4.16.1",
-		"google-auth-library": "^8.6.0",
-		"hbs": "~4.0.4",
-		"http-errors": "~1.6.3",
-		"jsonwebtoken": "^8.5.1",
-		"mongoose": "^6.6.5",
-		"morgan": "~1.9.1",
-		"nodemailer": "^6.8.0",
-		"redis": "^4.3.1",
-		"util": "^0.12.4",
-		"validator": "^13.7.0"
-	},
-	"devDependencies": {
-		"jest": "^29.2.1",
-		"nodemon": "^2.0.20"
-	}
+    "name": "mid-term",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "nodemon -e hbs,js ./bin/www",
+        "create-demo-data": "node demo-data",
+        "debug": "ndb ./bin/www",
+        "test": "jest"
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cookie-parser": "~1.4.4",
+        "debug": "~2.6.9",
+        "dotenv": "^16.0.3",
+        "express": "~4.16.1",
+        "express-session": "^1.17.3",
+        "google-auth-library": "^8.6.0",
+        "hbs": "~4.0.4",
+        "http-errors": "~1.6.3",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^6.6.5",
+        "morgan": "~1.9.1",
+        "nodemailer": "^6.8.0",
+        "redis": "^4.3.1",
+        "req-flash": "^0.0.3",
+        "util": "^0.12.4",
+        "validator": "^13.7.0"
+    },
+    "devDependencies": {
+        "jest": "^29.2.1",
+        "nodemon": "^2.0.20"
+    }
 }

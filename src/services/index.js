@@ -1,6 +1,7 @@
 module.exports = {
-	UserService: require('./user'),
-	TransactionService: require('./transaction'),
-	RedisService: require('./redis'),
-	MailService: require('./email'),
+	userService: require('./user'),
+	studentService: require('./student'),
+	transactionService: require('./transaction'),
+	redisService: require('./redis'),
+	mailService: require('./email'),
 };

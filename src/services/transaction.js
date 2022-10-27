@@ -1,21 +1,27 @@
 const { transactionModel } = require('../models');
 
 const TransactionService = {
-	get: async (payloads, field) => {
-		return await transactionModel.findOne(payloads, field).lean();
-	},
+    get: async (payloads, field) => {
+        return await transactionModel
+            .findOne(payloads, field)
+            .populate('user', 'name tel email')
+            .lean();
+    },
 
-	getAll: async (payer, sortBy = '-createdAt') => {
-		return await transactionModel.find({ payer }).sort(sortBy);
-	},
+    getMany: async (payloads, field) => {
+        return await transactionModel
+            .find(payloads, field)
+            .populate('user', 'name tel email')
+            .lean();
+    },
 
-	create: async (payloads) => {
-		return await transactionModel.create(payloads);
-	},
+    create: async (payloads) => {
+        return await transactionModel.create(payloads);
+    },
 
-	update: async (id, payloads) => {
-		return await transactionModel.findOneAndUpdate({ id }, payloads);
-	},
+    update: async (id, payloads) => {
+        return await transactionModel.findOneAndUpdate({ id }, payloads);
+    },
 };
 
 module.exports = TransactionService;

@@ -1,2 +1,36 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<div class='wrapper'>
+    <div class='app-wrapper'>
+
+        <!--Wallet-->
+        <aside class='wallet'>
+            <h2 class='mt-2'>My Wallets</h2>
+            <a href='/payment' class='btn btn-success float-right'>Pay tuition</a>
+            <div class='cards'></div>
+            <p><strong>Name: </strong>{{user.name}}</p>
+            <p><strong>Phone: </strong>{{user.tel}}</p>
+            <p><strong>Email: </strong>{{user.email}}</p>
+        </aside>
+
+        <content class='transactions-wrapper'>
+            <h2>
+                Current Balance
+                <span class='total-balance'>{{user.balance}}</span>
+            </h2>
+            <div class='transactions'>
+                {{#each transactions}}
+                    <div class='transaction-item debit'>
+                        <div class='transaction-item_details'>
+                            <h3>{{name}}</h3>
+                            <span class='details'>{{detail}}
+                                -
+                                {{createdAt}}</span>
+                        </div>
+                        <div class='transaction-item_amount'>
+                            <span>- $ </span><p class='amount'>{{amount}}</p>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </content>
+    </div>
+</div>

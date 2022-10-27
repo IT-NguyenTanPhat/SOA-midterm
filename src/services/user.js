@@ -1,4 +1,4 @@
-const { userModel, transactionModel } = require('../models');
+const { userModel } = require('../models');
 
 const UserService = {
 	// payload is condition (where clause)
@@ -21,5 +21,3 @@ const UserService = {
 };
 
 module.exports = UserService;
-// change userModel -> User
-// check findOneAndUpdate can validate available balance and tuition fee?

@@ -1,10 +1,10 @@
 const catchAsync = require('../utils/catchAsync');
-const { TransactionService } = require('../services');
-const { MailService } = require('../services');
+const { transactionService } = require('../services');
+const { mailService } = require('../services');
 
-const TransactionController = {
+const transactionController = {
 	createTransaction: catchAsync(async (req, res, next) => {
-		await MailService.sendMail({
+		await mailService.sendMail({
 			to: 'nht20021116@gmail.com',
 			subject: 'Welcome to Google send email',
 			content: `<h1>This is email to send otp</h1>`,
@@ -22,7 +22,7 @@ const TransactionController = {
 		// call email function to send otp
 	}),
 	performTransaction: catchAsync(async (req, res, next) => {
-		await MailService.sendMail({
+		await mailService.sendMail({
 			to: 'nht20021116@gmail.com',
 			subject: 'Welcome to Google send email',
 			content: `<h1>This is email to inform that transaction was succesful</h1>`,
@@ -37,18 +37,18 @@ const TransactionController = {
 		// in case consistent transaction, check if the fee already paid, invalidate all otp belong to this studentId
 	}),
 	getTransactionHistory: catchAsync(async (req, res, next) => {
-		const transactions = await TransactionService.getAll(req.user._id);
+		const transactions = await transactionService.getAll(req.user._id);
 		console.log('Transactions: ', transactions);
 		res.send('Render transaction history');
 	}),
 	getTransactionDetail: catchAsync(async (req, res, next) => {
-		const transaction = await TransactionService.get({ _id: req.params.id });
+		const transaction = await transactionService.get({ _id: req.params.id });
 		console.log(transaction);
 		res.send('Render transaction detail');
 	}),
 };
 
-module.exports = TransactionController;
+module.exports = transactionController;
 /* submit form -> /post create transaction
 validate data -> store in db with pending status
 redirect to otp view
