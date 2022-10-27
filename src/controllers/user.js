@@ -1,5 +1,3 @@
-const UserController = {
+const UserController = {};
 
-};
-
-export default UserController;
+module.exports = UserController;
