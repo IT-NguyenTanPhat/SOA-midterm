@@ -1,1 +1,4 @@
-export const User = require('./user').default;
+module.exports = {
+	userModel: require('./user'),
+	transactionModel: require('./transaction'),
+};
