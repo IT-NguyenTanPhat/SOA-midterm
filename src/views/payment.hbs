@@ -1,9 +1,10 @@
 <div class='container-fluid'>
+    <a href='/' class='btn btn-light mt-4 ml-3 float-left'>Home</a>
     <div class='row justify-content-center'>
         <div
             class='col-11 col-sm-10 col-md-10 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2 '
         >
-            <div class='card p-4 mt-3 mb-3 pt-5 ' style="box-shadow: 0px 8px 24px 4px rgb(255 173 40)">
+            <div class='card p-4 mt-3 mr-3 mb-3 pt-5 ' style="box-shadow: 0px 8px 24px 4px rgb(255 173 40)">
                 <h2 id='heading'>Tuition payment</h2>
                 <p>Fill all form field to go to next step</p>
                 <form id='msform'>
@@ -85,8 +86,11 @@
                                 class='rounded'
                                 type='text'
                                 name='student-id'
+                                id='student-id'
                                 placeholder='Student ID'
+                                required
                             />
+                            <span class='text-danger' id="id-error"></span><br>
                             <label class='fieldlabels'><strong>Student's name:</strong></label>
                             <input
                                 class='rounded'
@@ -129,6 +133,7 @@
                             </div>
                             <label class='fieldlabels'><strong>Transactor: </strong></label>
                             <input
+                                value='{{user.name}}'
                                 class='rounded'
                                 type='text'
                                 name='transactor'
@@ -175,23 +180,10 @@
                                     <h2 class='steps'>Step 4 - 4</h2>
                                 </div>
                             </div>
-                            <br /><br />
-                            <h2 class='purple-text text-center'><strong>SUCCESS
-                                    !</strong></h2>
-                            <br />
-                            <div class='row justify-content-center'>
-                                <div class='col-3'>
-                                    <img
-                                        src='https://i.imgur.com/GwStPmg.png'
-                                        class='fit-image'
-                                    />
-                                </div>
-                            </div>
-                            <br /><br />
                             <div class='row justify-content-center'>
                                 <div class='col-7 text-center'>
-                                    <h5 class='purple-text text-center'>You Have
-                                        Successfully Paid</h5>
+                                    <h5 class='purple-text text-center'>Please wait to redirect to otp page</h5>
+                                    <a href="/transactions/otp">Click here if do not redirect</a>
                                 </div>
                             </div>
                         </div>
@@ -213,6 +205,12 @@
         setProgressBar(current);
 
         $(".next").click(function(){
+            if (current == 2 && !$('#student-id').val()) {
+                $('#id-error').html("Please enter a student ID");
+                $('#student-id').focus();
+                return;
+            }
+
 
             current_fs = $(this).parent();
             next_fs = $(this).parent().next();

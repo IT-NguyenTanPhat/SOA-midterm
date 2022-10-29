@@ -1,4 +1,5 @@
 <div class='wrapper'>
+    <a href='/auth/logout' class='btn btn-light float-right mr-5'>Log out</a>
     <div class='app-wrapper'>
 
         <!--Wallet-->
@@ -26,7 +27,7 @@
                                 {{createdAt}}</span>
                         </div>
                         <div class='transaction-item_amount'>
-                            <span>- $ </span><p class='amount'>{{amount}}</p>
+                            <span>- đ </span><p class='amount'>{{amount}}</p>
                         </div>
                     </div>
                 {{/each}}
@@ -34,3 +35,9 @@
         </content>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+    $('.total-balance').html($('.total-balance').html().replace(/(\d)(?=(\d\d\d)+(?!\d))/g,
+    '$1.') + ' ₫'); })
+</script>

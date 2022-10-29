@@ -7,7 +7,9 @@ const Transaction = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User',
             required: true,
-        },
+        }, 
+        name: String, 
+        detail: String,
         amount: {
             type: Number,
             required: true,
