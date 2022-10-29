@@ -96,12 +96,13 @@
                                 class='rounded'
                                 type='text'
                                 name='student-name'
+                                id='student-name'
                                 placeholder="Student's Name"
                                 disabled
                             />
                             <label class='fieldlabels'><strong>Tuition:</strong></label>
                             <input
-                                class='rounded'
+                                class='rounded tuition'
                                 type='text'
                                 name='tuition'
                                 placeholder='Tuition'
@@ -111,7 +112,8 @@
                         <input
                             type='button'
                             name='next'
-                            class='next action-button rounded'
+                            id="next-step-2"
+                            class='next action-button rounded disabled'
                             value='Next'
                         />
                         <input
@@ -151,14 +153,14 @@
                             />
                             <label class='fieldlabels'><strong>Tuition: </strong></label>
                             <input
-                                class='rounded'
+                                class='rounded tuition'
                                 type='text'
                                 disabled
                                 placeholder='Tuition'
                             />
                         </div>
                         <input
-                            type='button'
+                            type='submit'
                             name='next'
                             class='next action-button rounded'
                             value='Pay'
@@ -205,12 +207,7 @@
         setProgressBar(current);
 
         $(".next").click(function(){
-            if (current == 2 && !$('#student-id').val()) {
-                $('#id-error').html("Please enter a student ID");
-                $('#student-id').focus();
-                return;
-            }
-
+            
 
             current_fs = $(this).parent();
             next_fs = $(this).parent().next();
@@ -276,5 +273,31 @@
             return false;
         })
 
+
+        $('#student-id').on('keyup', function(e) {
+            id = $('#student-id').val().trim();
+            if (!id) id = "0";
+			$.get('/student/'+id, function(data) {
+                if (data) {
+                    if (data.tuition == 0) {
+                        $('#next-step-2').addClass('disabled');
+                        $('#id-error').html("Tuition has been paid");
+                        $('#student-name').val(data.name);
+                        $('.tuition').val('');
+                    } else {
+                        $('#id-error').html("");
+                        $('#next-step-2').removeClass('disabled');
+                        $('#student-name').val(data.name);
+                        $('.tuition').val(data.tuition);
+                    }
+                }
+                else {
+                    $('#next-step-2').addClass('disabled');
+                    $('#id-error').html("Invalid student ID");
+                    $('#student-name').val('');
+                    $('.tuition').val('');
+                }
+			});
+		});
     });
 </script>

@@ -11,6 +11,12 @@ p {
     color: grey;
 }
 
+.disabled {
+    background: #cccc !important;
+    cursor: default !important;
+    pointer-events: none;
+}
+
 #heading {
     text-transform: uppercase;
     color: #673ab7;

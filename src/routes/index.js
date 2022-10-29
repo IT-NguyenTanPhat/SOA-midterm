@@ -3,7 +3,7 @@ const router = express.Router();
 const authRouter = require('./auth');
 const transactionRouter = require('./transaction');
 const { authController } = require('../controllers');
-const { userService, transactionService } = require('../services');
+const { userService, transactionService, studentService } = require('../services');
 const catchAsync = require('../utils/catchAsync');
 
 /* GET home page. */
@@ -33,8 +33,21 @@ router.post('/payment', authController.forLoggedIn, function (req, res, next) {
 router.get('/otp', authController.forLoggedIn, function (req, res, next) {
     res.render('otp', { title: 'Verify OTP' });
 });
+
 router.post('/otp', authController.forLoggedIn, function (req, res, next) {
     console.log(req.body);
 });
+
+router.get(
+    '/student/:id',
+    authController.forLoggedIn,
+    catchAsync(async function (req, res, next) {
+        const student = await studentService.get({ studentId: req.params.id });
+        res.json(student);
+    })
+);
+
+router.use('/auth', authRouter);
+router.use('/transactions', transactionRouter);
 
 module.exports = router;
