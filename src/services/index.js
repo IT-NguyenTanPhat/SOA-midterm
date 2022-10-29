@@ -4,4 +4,5 @@ module.exports = {
 	transactionService: require('./transaction'),
 	redisService: require('./redis'),
 	mailService: require('./email'),
+	otpService: require('./otp'),
 };
