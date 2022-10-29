@@ -1,21 +1,23 @@
-import { User } from '../models';
+const { userModel } = require('../models');
 
 const UserService = {
-    get: async (payloads, field) => {
-        return await User.findOne(payloads, field).lean();
-    },
+	// payload is condition (where clause)
+	// field is selected field (select clause)
+	get: async (payloads, field) => {
+		return await userModel.findOne(payloads, field).lean();
+	},
 
-    create: async (payloads) => {
-        return await User.create(payloads);
-    },
+	create: async (payloads) => {
+		return await userModel.create(payloads);
+	},
 
-    update: async (username, payloads) => {
-        return await User.findOneAndUpdate({ username }, payloads);
-    },
+	update: async (conditions, payloads) => {
+		return await userModel.findOneAndUpdate(conditions, payloads);
+	},
 
-    delete: async (username) => {
-        return await User.findOneAndDelete({ username });
-    },
+	delete: async (id) => {
+		return await userModel.findOneAndDelete({ _id: id });
+	},
 };
 
-export default UserService;
+module.exports = UserService;

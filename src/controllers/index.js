@@ -1,2 +1,6 @@
-export const userController = require('./user').default;
-export const tuitionFeeController = require('./tuitionFee').default;
+module.exports = {
+	transactionController: require('./transaction'),
+	authController: require('./auth'),
+	userController: require('./user'),
+	studentController: require('./student'),
+};

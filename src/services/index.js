@@ -1,1 +1,7 @@
-export const userService = require('./user').default;
+module.exports = {
+	userService: require('./user'),
+	studentService: require('./student'),
+	transactionService: require('./transaction'),
+	redisService: require('./redis'),
+	mailService: require('./email'),
+};

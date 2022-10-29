@@ -1,11 +1,40 @@
-import { Schema as _Schema, model } from 'mongoose';
+const { Schema: _Schema, model } = require('mongoose');
+const bcrypt = require('bcryptjs');
+
 const Schema = _Schema;
 
 const User = new Schema({
-    username: { type: String, required: true },
-    password: { type: String, required: true },
-    name: { type: String, required: true },
-    balance: {type: Int16Array, require: true},
+    name: String,
+    tel: {
+        type: String,
+        required: true,
+        unique: true,
+        length: 10,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    balance: Number,
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
+        minLength: 6,
+        maxLength: 16,
+    },
 });
 
-export default model('User', User);
+User.pre('save', async function (next) {
+    // 12 is salt length
+    this.password = await bcrypt.hash(this.password, 12);
+
+    next();
+});
+
+module.exports = model('User', User);
