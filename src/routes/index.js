@@ -36,6 +36,7 @@ router.get('/otp', authController.forLoggedIn, function (req, res, next) {
 
 router.post('/otp', authController.forLoggedIn, function (req, res, next) {
     console.log(req.body);
+
 });
 
 router.get(

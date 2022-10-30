@@ -1,29 +1,41 @@
 const { transactionModel } = require('../models');
 
+const addPopulateQuery = (query, fields) => {
+	Object.entries(fields).forEach(([path, selectedFields]) =>
+		query.populate(path, selectedFields)
+	);
+	return query;
+};
+
 const TransactionService = {
-    get: async (payloads, field) => {
-        return await transactionModel
-            .findOne(payloads, field)
-            .populate('user', 'name tel email')
-            .lean();
-    },
+	get: async (payloads, field, needPopulate = true) => {
+		const query = transactionModel.findOne(payloads, field);
 
-    getMany: async (payloads, field) => {
-        return await transactionModel
-            .find(payloads, field)
-            .populate('user', 'name tel email')
-            .lean();
-    },
+		if (!needPopulate) return await query.lean();
 
-    create: async (payloads) => {
-        return await transactionModel.create(payloads);
-    },
+		return await addPopulateQuery(query, {
+			transactor: 'name tel email',
+			student: 'studentId name',
+		}).lean();
+	},
 
-    update: async (id, payloads) => {
-        return await transactionModel.findOneAndUpdate({ id }, payloads);
-    },
+	getMany: async (payloads, field) => {
+		console.log(payloads);
+		const query = transactionModel.find(payloads, field);
+
+		return await addPopulateQuery(query, {
+			transactor: 'name tel email',
+			student: 'studentId name',
+		}).lean();
+	},
+
+	create: async (payloads) => {
+		return await transactionModel.create(payloads);
+	},
+
+	update: async (id, payloads) => {
+		return await transactionModel.findOneAndUpdate({ id }, payloads);
+	},
 };
 
 module.exports = TransactionService;
-// change userModel -> User
-// check findOneAndUpdate can validate available balance and tuition fee?

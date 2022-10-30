@@ -1,48 +1,16 @@
-# Cookie store
+# Create sample data
 
-- JWT
+- Run "npm run create-sample-data <options>" with options are: --import, --delete (if you run without option default it will perform reset data)
 
-# Tuition Collection
+# Transaction API
 
-- student id
-- tuition fee
+- GET /transactions -> render UI
+- POST /transactions -> create a new transaction (data required: amount, studentId)
+- POST /exec-transaction -> execute transaction (data required: otp)
+- GET /transactions/:transactionId -> render UI
+- GET /transactions/history -> render UI
 
-# Student Collection
+# Problems
 
-- student id
-- username
-- password
-- fullname
-- tel
-- email
-- available balance
-- transaction history
-- tuition fee
-
-# Transaction Collection
-
-- transaction id
-- payer
-- pay for (student id)
-- money
-- created at
-
-# Logic
-
-- When logged in, store student id in token
-- When click on payment, server will go through protected middleware, server will have account owner info (full name, email, tel, available balance) to render in form
-- When user enter target student id, server will find the user belong to that student id and have the targer info (full name, tuition fee <if fee <= 0 raise error >)
-- Send otp via email and create new document in otp collection
-- Enter otp then click OK
-- Server will verify otp,
-  => use mongodb transaction for implementation
-
-only login return cookie
-/payment -> check is exist cookie
-check if section
-/post -> check is exist cookie
-
-# TODO
-
-unit test
-create transaction
+- cannot create transaction with with same transactor (because of unique transactor)
+- transaction error but still update

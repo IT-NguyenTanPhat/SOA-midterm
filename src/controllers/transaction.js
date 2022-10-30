@@ -1,43 +1,140 @@
+const mongoose = require('mongoose');
 const catchAsync = require('../utils/catchAsync');
-const { transactionService } = require('../services');
-const { mailService } = require('../services');
+const customError = require('../utils/customError');
+const {
+	transactionService,
+	studentService,
+	userService,
+	otpService,
+	mailService,
+} = require('../services');
 
 const transactionController = {
 	createTransaction: catchAsync(async (req, res, next) => {
+		// req.body is required to have amount, studentId
+		const { amount, studentId } = req.body;
+
+		if (!amount || !studentId) {
+			return res.send('Missing data');
+		}
+
+		const targetStudent = await studentService.get({ studentId }, '_id');
+
+		if (!targetStudent) {
+			return res.send('Not found this student');
+		}
+
+		if (targetStudent.tuition === 0) {
+			return res.send('Tuition has already been paid');
+		}
+
+		if (amount < 0 || amount > req.user.balance) {
+			return res.send('amount is invalid');
+		}
+
+		const transaction = await transactionService.create({
+			transactor: req.user._id,
+			amount,
+			student: targetStudent._id,
+		});
+
+		const otp = await otpService.create(transaction._id);
+
 		await mailService.sendMail({
 			to: 'nht20021116@gmail.com',
-			subject: 'Welcome to Google send email',
-			content: `<h1>This is email to send otp</h1>`,
+			// to: req.user.email,
+			subject: 'Thank you for choosing our services. Here is your otp code',
+			content: `<p>Please enter this otp to execute your transaction ${otp}</p>`,
 		});
-		res.send('Otp has been sent to you email');
-		// verify data
-		/* 
-			data: {
-				payer: req.user.id,
-				money: req.body.money,
-				payFor: req.body.studentId
-			}
-		*/
-		// if ok generate otp
-		// call email function to send otp
+
+		res.send('Redirect to otp page');
 	}),
+
+	verifyOtp: catchAsync(async (req, res, next) => {
+		// req.body is required to have otp
+		const otpCode = req.body.otp;
+
+		if (!otpCode) {
+			return res.send('Please provide otp code');
+		}
+
+		const transactionId = await otpService.get(otpCode);
+
+		if (!transactionId) {
+			return res.send('Invalid OTP or it has already expired');
+		}
+
+		req.otp = otpCode;
+		req.transactionId = transactionId;
+		next();
+	}),
+
 	performTransaction: catchAsync(async (req, res, next) => {
-		await mailService.sendMail({
-			to: 'nht20021116@gmail.com',
-			subject: 'Welcome to Google send email',
-			content: `<h1>This is email to inform that transaction was succesful</h1>`,
-		});
-		res.send('Transaction was succesfully created');
-		// verify otp
-		// begin transaction
-		// update payer balance
-		// update student fee to 0
-		// if transaction successful
-		// generate transaction detail and invalidate otp
-		// in case consistent transaction, check if the fee already paid, invalidate all otp belong to this studentId
+		const transactionId = req.transactionId;
+
+		const transaction = await transactionService.get(
+			{ _id: transactionId },
+			'-__v',
+			false
+		);
+
+		if (!transaction) {
+			return res.send('500 error code');
+		}
+
+		const { transactor, student, amount } = transaction;
+
+		const session = await mongoose.startSession();
+
+		try {
+			await session.startTransaction();
+
+			const userBalance = req.user.balance;
+			const targetStudent = await studentService.get({ student });
+
+			if (!targetStudent) {
+				throw customError(500, 'Student not found');
+			}
+
+			if (targetStudent.tuition === 0) {
+				throw customError(400, 'Tuition has already been paid');
+			}
+
+			if (userBalance < amount) {
+				throw customError(400, 'Not enough money');
+			}
+
+			await userService.update(
+				{ _id: transactor },
+				{ balance: userBalance - amount }
+			);
+
+			await studentService.update({ student }, { tuition: 0 });
+
+			await transactionService.update(
+				{ _id: transactionId },
+				{ status: 'Success' }
+			);
+
+			session.commitTransaction();
+			res.send('Redirect to transaction detail page');
+		} catch (err) {
+			await session.abortTransaction();
+			await transaction.updateOne({ status: 'Failed' });
+
+			if (err.code && err.code === 400) {
+				return res.send(`Flash message: ${err.message}`);
+			}
+			res.send('Internal Server Error');
+		} finally {
+			session.endSession();
+			otpService.invalidate(req.otp);
+		}
 	}),
 	getTransactionHistory: catchAsync(async (req, res, next) => {
-		const transactions = await transactionService.getAll(req.user._id);
+		const transactions = await transactionService.getMany({
+			transactor: req.user._id,
+		});
 		console.log('Transactions: ', transactions);
 		res.send('Render transaction history');
 	}),
@@ -49,21 +146,3 @@ const transactionController = {
 };
 
 module.exports = transactionController;
-/* submit form -> /post create transaction
-validate data -> store in db with pending status
-redirect to otp view
-
-enter otp -> /confirm-transaction
-select otp
-if otp ok -> transaction id
-transaction id
-
-perform transaction
-(update student fee to 0
-update current user balance)
-
-if success create transaction log
-invalidate otp
-
-redirect to transaction detail
-or render flash error*/

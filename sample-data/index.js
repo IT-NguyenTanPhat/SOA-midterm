@@ -1,23 +1,21 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-const { userModel, transactionModel } = require('../src/models');
-const users = require('./users.json');
-const transactions = require('./transactions.json');
+const { userModel, studentModel } = require('../src/models');
+const users = require('./users-data');
+const students = require('./students-data');
 
 dotenv.config({ path: `${__dirname}/../.env` });
 const DB = process.env.DATABASE;
 
 const importData = async () => {
-	await userModel.create(users, {
-		validateBeforeSave: false,
-	});
-	await transactionModel.create(transactions);
+	await userModel.create(users);
+	await studentModel.create(students);
 };
 
 const deleteData = async () => {
 	await userModel.deleteMany();
-	await transactionModel.deleteMany();
+	await studentModel.deleteMany();
 };
 
 const resetData = async () => {
