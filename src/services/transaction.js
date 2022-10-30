@@ -20,7 +20,6 @@ const TransactionService = {
 	},
 
 	getMany: async (payloads, field) => {
-		console.log(payloads);
 		const query = transactionModel.find(payloads, field);
 
 		return await addPopulateQuery(query, {
