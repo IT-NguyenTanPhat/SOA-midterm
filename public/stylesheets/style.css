@@ -295,7 +295,7 @@ h3 {
 .transactions {
     margin-top: 40px;
     border-top: 1px solid #e5e5e5;
-    padding-top: 50px;
+    padding-top: 25px;
     overflow: scroll;
 }
 
@@ -308,7 +308,7 @@ h3 {
 }
 
 .transaction-item {
-    margin-bottom: 45px;
+    margin-bottom: 25px;
 }
 
 .transaction-item {
@@ -357,7 +357,7 @@ h3 {
 
 .transaction-item span.details {
     font-size: 14px;
-    line-height: 14px;
+    line-height: 20px;
     color: #999;
 }
 

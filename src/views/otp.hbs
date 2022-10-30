@@ -63,6 +63,7 @@
                                 required
                             />
                         </div>
+                        <a href="#" id="resend-otp">Click here to resend OTP</a>
                         <input type="hidden" id="otp-input" name="otp">
                         <input
                             type='submit'
@@ -97,5 +98,11 @@
             res += $(this).val();
         });
         $('#otp-input').val(res);
+    })
+
+    $('.resend-otp').click(function(e) {
+        $.get('/resend-otp', function(data) {
+    
+        });
     })
 </script>

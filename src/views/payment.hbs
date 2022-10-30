@@ -7,7 +7,7 @@
             <div class='card p-4 mt-3 mr-3 mb-3 pt-5 ' style="box-shadow: 0px 8px 24px 4px rgb(255 173 40)">
                 <h2 id='heading'>Tuition payment</h2>
                 <p>Fill all form field to go to next step</p>
-                <form id='msform'>
+                <form id='msform' method="post">
                     <!-- progressbar -->
                     <ul id='progressbar'>
                         <li class='active' id='account'><strong
@@ -40,7 +40,6 @@
                             <input
                                 class='rounded'
                                 type='text'
-                                name='name'
                                 value="{{user.name}}"
                                 placeholder='Name'
                                 disabled
@@ -49,7 +48,6 @@
                             <input
                                 class='rounded'
                                 type='text'
-                                name='tel'
                                 value="{{user.tel}}"
                                 placeholder='Phone'
                                 disabled
@@ -58,7 +56,6 @@
                             <input
                                 class='rounded'
                                 type='email'
-                                name='email'
                                 value="{{user.email}}"
                                 placeholder='Email address'
                                 disabled
@@ -66,7 +63,6 @@
                         </div>
                         <input
                             type='button'
-                            name='next'
                             class='next action-button rounded'
                             value='Next'
                         />
@@ -85,7 +81,7 @@
                             <input
                                 class='rounded'
                                 type='text'
-                                name='student-id'
+                                name='studentId'
                                 id='student-id'
                                 placeholder='Student ID'
                                 required
@@ -93,32 +89,28 @@
                             <span class='text-danger' id="id-error"></span><br>
                             <label class='fieldlabels'><strong>Student's name:</strong></label>
                             <input
-                                class='rounded'
+                                class='rounded student-name'
                                 type='text'
-                                name='student-name'
-                                id='student-name'
                                 placeholder="Student's Name"
                                 disabled
                             />
                             <label class='fieldlabels'><strong>Tuition:</strong></label>
                             <input
                                 class='rounded tuition'
-                                type='text'
-                                name='tuition'
+                                type='number'
+                                name='amount'
                                 placeholder='Tuition'
-                                disabled
+                                readonly
                             />
                         </div>
                         <input
                             type='button'
-                            name='next'
                             id="next-step-2"
                             class='next action-button rounded disabled'
                             value='Next'
                         />
                         <input
                             type='button'
-                            name='previous'
                             class='previous action-button-previous rounded'
                             value='Previous'
                         />
@@ -138,7 +130,6 @@
                                 value='{{user.name}}'
                                 class='rounded'
                                 type='text'
-                                name='transactor'
                                 disabled
                                 placeholder='Transactor'
                             />
@@ -151,23 +142,27 @@
                                 placeholder='Balance'
                                 disabled
                             />
+                            <label class='fieldlabels'><strong>Student's name:</strong></label>
+                            <input
+                                class='rounded student-name'
+                                type='text'
+                                placeholder="Student's Name"
+                                disabled
+                            />
                             <label class='fieldlabels'><strong>Tuition: </strong></label>
                             <input
                                 class='rounded tuition'
-                                type='text'
+                                type='number'
                                 disabled
                                 placeholder='Tuition'
                             />
                         </div>
-                        <input
+                        <button
                             type='submit'
-                            name='next'
                             class='next action-button rounded'
-                            value='Pay'
-                        />
+                        >Pay</button>
                         <input
                             type='button'
-                            name='previous'
                             class='previous action-button-previous rounded'
                             value='Previous'
                         />
@@ -272,7 +267,7 @@
         $(".submit").click(function(){
             return false;
         })
-
+    
 
         $('#student-id').on('keyup', function(e) {
             id = $('#student-id').val().trim();
@@ -282,19 +277,19 @@
                     if (data.tuition == 0) {
                         $('#next-step-2').addClass('disabled');
                         $('#id-error').html("Tuition has been paid");
-                        $('#student-name').val(data.name);
+                        $('.student-name').val(data.name);
                         $('.tuition').val('');
                     } else {
                         $('#id-error').html("");
                         $('#next-step-2').removeClass('disabled');
-                        $('#student-name').val(data.name);
+                        $('.student-name').val(data.name);
                         $('.tuition').val(data.tuition);
                     }
                 }
                 else {
                     $('#next-step-2').addClass('disabled');
                     $('#id-error').html("Invalid student ID");
-                    $('#student-name').val('');
+                    $('.student-name').val('');
                     $('.tuition').val('');
                 }
 			});

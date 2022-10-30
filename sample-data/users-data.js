@@ -4,7 +4,7 @@ module.exports = [
 	{
 		name: 'Nguyễn Tấn Phát',
 		tel: '0988662441',
-		email: 'tanphat20065@gmail.com',
+		email: 'tanphat200265@gmail.com',
 		balance: 25000000,
 		username: 'tanphat',
 		password: '123456',

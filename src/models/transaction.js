@@ -4,6 +4,11 @@ const Schema = _Schema;
 const Transaction = new Schema(
 
 	{
+        name: {
+			type: String,
+			default: 'Pay Tuition',
+		},
+        detail: String,
 		transactor: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',

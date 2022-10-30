@@ -1,9 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const authRouter = require('./auth');
-const transactionRouter = require('./transaction');
-const { authController, userController, studentController } = require('../controllers');
-const { userService, transactionService, studentService } = require('../services');
+const {
+    authController,
+    paymentController,
+    otpController,
+    transactionController,
+} = require('../controllers');
+const {
+    userService,
+    transactionService,
+    studentService,
+} = require('../services');
 const catchAsync = require('../utils/catchAsync');
 
 /* GET home page. */
@@ -12,32 +20,29 @@ router.get(
     authController.forLoggedIn,
     catchAsync(async (req, res, next) => {
         const user = await userService.get({ _id: req.user._id });
+        const error = req.flash('error') || '';
         const transactions = await transactionService.getMany({
             transactor: req.user._id,
         });
-        res.render('index', { title: 'Ibanking', user, transactions });
+        res.render('index', { title: 'Ibanking', user, transactions, error });
     })
 );
+
 router.get(
     '/payment',
     authController.forLoggedIn,
-    catchAsync(async function (req, res, next) {
-        const user = await userService.get({ _id: req.user._id });
-        res.render('payment', { title: 'Tuition payment', user });
-    })
+    paymentController.paymentView
 );
-router.post('/payment', authController.forLoggedIn, function (req, res, next) {
-    res.redirect('/otp');
-});
+router.post('/payment', authController.forLoggedIn, paymentController.pay);
 
-router.get('/otp', authController.forLoggedIn, function (req, res, next) {
-    res.render('otp', { title: 'Verify OTP' });
-});
-
-router.post('/otp', authController.forLoggedIn, function (req, res, next) {
-    console.log(req.body);
-
-});
+router.get('/otp', authController.forLoggedIn, otpController.otpView);
+router.get('/resend-otp', authController.forLoggedIn, otpController.resend);
+router.post(
+    '/otp',
+    authController.forLoggedIn,
+    otpController.verifyOtp,
+    transactionController.create
+);
 
 router.get(
     '/student/:id',
@@ -49,11 +54,5 @@ router.get(
 );
 
 router.use('/auth', authRouter);
-router.use('/transactions', transactionRouter);
-
-router.get('/data', function (req, res, next) {
-    userController.createSampleData();
-    studentController.createSampleData();
-});
 
 module.exports = router;
