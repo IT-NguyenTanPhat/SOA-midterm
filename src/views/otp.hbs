@@ -1,0 +1,108 @@
+<div class='container-fluid'>
+    <a href='/' class='btn btn-light mt-4 ml-3 float-left'>Home</a>
+    <div class='row justify-content-center'>
+        <div
+            class='col-11 col-sm-10 col-md-10 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2'
+        >
+            <div
+                class='card p-4 mt-3 mr-3 mb-3 pt-5'
+                style='box-shadow: 0px 8px 24px 4px rgb(255 173 40)'
+            >
+                <h2 id='heading' class='mb-2'>Verify OTP</h2>
+                <p>Please fill OTP in your email</p>
+                <form id='msform' method='post'>
+                    <!-- fieldsets -->
+                    <fieldset class='p-0'>
+                        <div class='form-card' style='text-align: center;'>
+                            <input
+                                class='otp'
+                                type='text'
+                                oninput='digitValidate(this)'
+                                onkeyup='tabChange(1)'
+                                maxlength='1'
+                                required
+                            />
+                            <input
+                                class='otp'
+                                type='text'
+                                oninput='digitValidate(this)'
+                                onkeyup='tabChange(2)'
+                                maxlength='1'
+                                required
+                            />
+                            <input
+                                class='otp'
+                                type='text'
+                                oninput='digitValidate(this)'
+                                onkeyup='tabChange(3)'
+                                maxlength='1'
+                                required
+                            />
+                            <input
+                                class='otp'
+                                type='text'
+                                oninput='digitValidate(this)'
+                                onkeyup='tabChange(4)'
+                                maxlength='1'
+                                required
+                            />
+                            <input
+                                class='otp'
+                                type='text'
+                                oninput='digitValidate(this)'
+                                onkeyup='tabChange(5)'
+                                maxlength='1'
+                                required
+                            />
+                            <input
+                                class='otp'
+                                type='text'
+                                oninput='digitValidate(this)'
+                                onkeyup='tabChange(6)'
+                                maxlength='1'
+                                required
+                            />
+                        </div>
+                        <a href="#" id="resend-otp">Click here to resend OTP</a>
+                        <input type="hidden" id="otp-input" name="otp">
+                        <input
+                            type='submit'
+                            class='next action-button rounded'
+                            value='Submit'
+                        />
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let digitValidate = function(ele) {
+        console.log(ele.value);
+        ele.value = ele.value.replace(/[^0-9]/g,'');
+    };
+
+    let tabChange = function(val){
+        let ele = document.querySelectorAll('input');
+        if(ele[val-1].value != '') {
+            ele[val].focus();
+        } else if(ele[val-1].value == '') {
+            ele[val-2].focus();
+        };
+    };
+
+    $('#msform').submit(function (e) {
+        res = '';
+        $('.otp').each(function(index) {
+            res += $(this).val();
+        });
+        $('#otp-input').val(res);
+    })
+
+    $('.resend-otp').click(function(e) {
+        $.get('/resend-otp', function(data) {
+    
+        });
+    })
+</script>

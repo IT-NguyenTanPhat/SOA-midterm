@@ -22,10 +22,15 @@ const TransactionService = {
 	getMany: async (payloads, field) => {
 		const query = transactionModel.find(payloads, field);
 
-		return await addPopulateQuery(query, {
+		const res =  await addPopulateQuery(query, {
 			transactor: 'name tel email',
 			student: 'studentId name',
 		}).lean();
+
+        res.map((item) => {
+            item.createdAt = item.createdAt.toLocaleString('vi-VN');
+        });
+        return res;
 	},
 
 	create: async (payloads) => {

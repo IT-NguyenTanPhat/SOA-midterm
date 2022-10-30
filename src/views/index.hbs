@@ -1,4 +1,18 @@
 <div class='wrapper'>
+    {{#if error}}
+    <div class='alert alert-danger alert-dismissible fade show' style='max-width: 30%' role='alert'>
+        <strong>{{error}}</strong>
+        <button
+            type='button'
+            class='close'
+            data-dismiss='alert'
+            aria-label='Close'
+        >
+            <span aria-hidden='true'>&times;</span>
+        </button>
+    </div>
+    {{/if}}
+    <a href='/auth/logout' class='btn btn-light float-right mr-5'>Log out</a>
     <div class='app-wrapper'>
 
         <!--Wallet-->
@@ -14,19 +28,18 @@
         <content class='transactions-wrapper'>
             <h2>
                 Current Balance
-                <span class='total-balance'>{{user.balance}}</span>
+                <span class='total-balance money'>{{user.balance}}</span>
             </h2>
             <div class='transactions'>
                 {{#each transactions}}
                     <div class='transaction-item debit'>
                         <div class='transaction-item_details'>
                             <h3>{{name}}</h3>
-                            <span class='details'>{{detail}}
-                                -
-                                {{createdAt}}</span>
+                            <span class='details mb-2'>{{detail}}</span><br>
+                            <span class='details mt-2'>{{createdAt}}</span>
                         </div>
                         <div class='transaction-item_amount'>
-                            <span>- $ </span><p class='amount'>{{amount}}</p>
+                            <span>- </span><p class='amount money'> {{amount}}</p>
                         </div>
                     </div>
                 {{/each}}
@@ -34,3 +47,9 @@
         </content>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+    $('.money').html($('.money').html().replace(/(\d)(?=(\d\d\d)+(?!\d))/g,
+    '$1.') + ' ₫'); })
+</script>

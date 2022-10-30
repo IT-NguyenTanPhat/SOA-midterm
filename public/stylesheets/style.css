@@ -11,6 +11,12 @@ p {
     color: grey;
 }
 
+.disabled {
+    background: #cccc !important;
+    cursor: default !important;
+    pointer-events: none;
+}
+
 #heading {
     text-transform: uppercase;
     color: #673ab7;
@@ -285,14 +291,11 @@ h3 {
     font-size: 32px;
     color: #444750;
 }
-.total-balance::before {
-    content: '$';
-}
 
 .transactions {
-    margin-top: 60px;
+    margin-top: 40px;
     border-top: 1px solid #e5e5e5;
-    padding-top: 50px;
+    padding-top: 25px;
     overflow: scroll;
 }
 
@@ -305,7 +308,7 @@ h3 {
 }
 
 .transaction-item {
-    margin-bottom: 45px;
+    margin-bottom: 25px;
 }
 
 .transaction-item {
@@ -354,7 +357,7 @@ h3 {
 
 .transaction-item span.details {
     font-size: 14px;
-    line-height: 14px;
+    line-height: 20px;
     color: #999;
 }
 
@@ -478,4 +481,11 @@ h3 {
     h2 {
         font: 18px/24px 'Open Sans', sans-serif;
     }
+}
+
+.otp  {
+    display: inline-block;
+    width: 50px !important;
+    height: 50px;
+    text-align: center;
 }
