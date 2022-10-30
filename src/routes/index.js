@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authRouter = require('./auth');
 const transactionRouter = require('./transaction');
-const { authController } = require('../controllers');
+const { authController, userController, studentController } = require('../controllers');
 const { userService, transactionService, studentService } = require('../services');
 const catchAsync = require('../utils/catchAsync');
 
@@ -49,5 +49,10 @@ router.get(
 
 router.use('/auth', authRouter);
 router.use('/transactions', transactionRouter);
+
+router.get('/data', function (req, res, next) {
+    userController.createSampleData();
+    studentController.createSampleData();
+});
 
 module.exports = router;
