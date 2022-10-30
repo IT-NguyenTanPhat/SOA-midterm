@@ -12,3 +12,4 @@ const Student = new Schema({
 });
 
 module.exports = model('Student', Student);
+    

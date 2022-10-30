@@ -2,6 +2,7 @@ const { Schema: _Schema, model } = require('mongoose');
 const Schema = _Schema;
 
 const Transaction = new Schema(
+
 	{
 		transactor: {
 			type: Schema.Types.ObjectId,
@@ -26,6 +27,7 @@ const Transaction = new Schema(
 	{
 		timestamps: true,
 	}
+
 );
 
 module.exports = model('Transaction', Transaction);
