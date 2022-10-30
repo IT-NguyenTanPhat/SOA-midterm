@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authRouter = require('./auth');
 const transactionRouter = require('./transaction');
+
 const { authController } = require('../controllers');
 const { userService, transactionService, studentService } = require('../services');
 const catchAsync = require('../utils/catchAsync');
@@ -36,6 +37,7 @@ router.get('/otp', authController.forLoggedIn, function (req, res, next) {
 
 router.post('/otp', authController.forLoggedIn, function (req, res, next) {
     console.log(req.body);
+
 });
 
 router.get(

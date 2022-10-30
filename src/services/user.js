@@ -12,7 +12,9 @@ const UserService = {
 	},
 
 	update: async (conditions, payloads) => {
-		return await userModel.findOneAndUpdate(conditions, payloads);
+		return await userModel.findOneAndUpdate(conditions, payloads, {
+			runValidators: true,
+		});
 	},
 
 	delete: async (id) => {
