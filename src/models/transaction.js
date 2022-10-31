@@ -2,13 +2,12 @@ const { Schema: _Schema, model } = require('mongoose');
 const Schema = _Schema;
 
 const Transaction = new Schema(
-
 	{
-        name: {
+		name: {
 			type: String,
 			default: 'Pay Tuition',
 		},
-        detail: String,
+		detail: String,
 		transactor: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',
@@ -32,7 +31,11 @@ const Transaction = new Schema(
 	{
 		timestamps: true,
 	}
+);
 
+Transaction.index(
+	{ updatedAt: 1 },
+	{ expires: 300, partialFilterExpression: { status: 'Pending' } }
 );
 
 module.exports = model('Transaction', Transaction);

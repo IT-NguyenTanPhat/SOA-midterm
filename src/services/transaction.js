@@ -22,15 +22,16 @@ const TransactionService = {
 	getMany: async (payloads, field) => {
 		const query = transactionModel.find(payloads, field);
 
-		const res =  await addPopulateQuery(query, {
+		const res = await addPopulateQuery(query, {
 			transactor: 'name tel email',
 			student: 'studentId name',
 		}).lean();
 
-        res.map((item) => {
-            item.createdAt = item.createdAt.toLocaleString('vi-VN');
-        });
-        return res;
+		res.map((item) => {
+			item.createdAt = item.createdAt.toLocaleString('vi-VN');
+		});
+
+		return res;
 	},
 
 	create: async (payloads) => {
@@ -38,7 +39,13 @@ const TransactionService = {
 	},
 
 	update: async (id, payloads) => {
-		return await transactionModel.findOneAndUpdate({ id }, payloads);
+		return await transactionModel.findOneAndUpdate({ _id: id }, payloads, {
+			new: true,
+		});
+	},
+
+	delete: async (id) => {
+		return await transactionModel.findOneAndDelete({ _id: id });
 	},
 };
 
