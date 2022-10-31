@@ -12,6 +12,19 @@
         </button>
     </div>
     {{/if}}
+    {{#if success}}
+    <div class='alert alert-success alert-dismissible fade show' style='max-width: 30%' role='alert'>
+        <strong>{{success}}</strong>
+        <button
+            type='button'
+            class='close'
+            data-dismiss='alert'
+            aria-label='Close'
+        >
+            <span aria-hidden='true'>&times;</span>
+        </button>
+    </div>
+    {{/if}}
     <a href='/auth/logout' class='btn btn-light float-right mr-5'>Log out</a>
     <div class='app-wrapper'>
 
@@ -39,7 +52,7 @@
                             <span class='details mt-2'>{{createdAt}}</span>
                         </div>
                         <div class='transaction-item_amount'>
-                            <span>- </span><p class='amount money'> {{amount}}</p>
+                            <p class='amount money'>- {{amount}}</p>
                         </div>
                     </div>
                 {{/each}}
@@ -50,6 +63,8 @@
 
 <script>
     $(document).ready(function() {
-    $('.money').html($('.money').html().replace(/(\d)(?=(\d\d\d)+(?!\d))/g,
-    '$1.') + ' ₫'); })
+        $('.money').each(function(index) {
+            $(this).html($(this).html().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.') + ' ₫');
+        })
+    })
 </script>

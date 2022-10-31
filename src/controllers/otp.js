@@ -1,4 +1,4 @@
-const { otpService } = require('../services');
+const { otpService, userService, mailService } = require('../services');
 const catchAsync = require('../utils/catchAsync');
 
 const otpController = {
@@ -28,7 +28,23 @@ const otpController = {
     }),
 
     resend: catchAsync(async (req, res, next) => {
-        // 
+        const transactionId = global.transactionId;
+        const otpCode = global.otp;
+
+        if (!transactionId || !otpCode) {
+            req.flash('error', 'Something went wrong!');
+            return res.redirect('/');
+        }
+        const user = await userService.get({ _id: req.user._id });
+
+        await otpService.invalidate(otpCode);
+        const otp = await otpService.create(transactionId);
+        await mailService.sendMail({
+            to: user.email,
+            subject:
+                'Thank you for choosing our services. Here is your otp code',
+            content: `<p>Please enter this otp to execute your transaction ${otp}</p>`,
+        });
     }),
 };
 

@@ -49,6 +49,8 @@ const paymentController = {
             content: `<p>Please enter this otp to execute your transaction ${otp}</p>`,
         });
 
+        global.otp = otp;
+        global.transactionId = transaction._id;
         res.redirect('/otp');
     }),
 };

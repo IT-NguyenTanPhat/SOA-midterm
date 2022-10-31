@@ -11,6 +11,7 @@ const {
 const transactionController = {
     create: catchAsync(async (req, res, next) => {
         const transactionId = req.transactionId;
+        const user = await userService.get({ _id: req.user._id });
 
         const transaction = await transactionService.get(
             { _id: transactionId },
@@ -26,11 +27,9 @@ const transactionController = {
         const { transactor, student, amount } = transaction;
 
         const session = await mongoose.startSession();
-
         try {
             await session.startTransaction();
 
-            const userBalance = req.user.balance;
             const targetStudent = await studentService.get({ student });
 
             if (!targetStudent) {
@@ -41,16 +40,16 @@ const transactionController = {
                 throw customError(400, 'Tuition has already been paid');
             }
 
-            if (userBalance < amount) {
+            if (user.balance < amount) {
                 throw customError(400, 'Not enough money');
             }
 
             await userService.update(
                 { _id: transactor },
-                { balance: userBalance - amount }
+                { balance: user.balance - amount }
             );
 
-            await studentService.update({ student }, { tuition: 0 });
+            await studentService.update({ _id: student._id }, { tuition: 0 });
 
             await transactionService.update(
                 { _id: transactionId },
@@ -58,10 +57,11 @@ const transactionController = {
             );
 
             session.commitTransaction();
+            req.flash('success', 'Paid tuition successfully');
             res.redirect('/');
         } catch (err) {
             await session.abortTransaction();
-            await transaction.updateOne({ status: 'Failed' });
+            await transactionService.delete({ _id: transactionId });
 
             req.flash('error', 'Something went wrong!');
             res.redirect('/');

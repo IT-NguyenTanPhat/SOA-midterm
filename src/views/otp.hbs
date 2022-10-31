@@ -97,12 +97,12 @@
         $('.otp').each(function(index) {
             res += $(this).val();
         });
-        $('#otp-input').val(res);
+        $('#otp-input').val(res);   
     })
 
-    $('.resend-otp').click(function(e) {
-        $.get('/resend-otp', function(data) {
-    
+    $('#resend-otp').click(function(e) {
+        $.get('/resend-otp', function(data, status) {
+            console.log(status);
         });
     })
 </script>

@@ -20,7 +20,6 @@ const TransactionService = {
 	},
 
 	getMany: async (payloads, field) => {
-		console.log(payloads);
 		const query = transactionModel.find(payloads, field);
 
 		const res =  await addPopulateQuery(query, {
@@ -38,8 +37,12 @@ const TransactionService = {
 		return await transactionModel.create(payloads);
 	},
 
-	update: async (id, payloads) => {
-		return await transactionModel.findOneAndUpdate({ id }, payloads);
+	update: async (condition, payloads) => {
+		return await transactionModel.findOneAndUpdate(condition, payloads);
+	},
+
+    delete: async (condition) => {
+		return await transactionModel.findOneAndDelete(condition);
 	},
 };
 

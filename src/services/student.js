@@ -15,7 +15,6 @@ const StudentService = {
 		const query = studentModel.findOneAndUpdate(conditions, payloads, {
 			runValidators: true,
 		});
-		console.log(query);
 		return await query;
 	},
 

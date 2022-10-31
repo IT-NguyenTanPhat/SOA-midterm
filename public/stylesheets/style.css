@@ -251,7 +251,6 @@ h3 {
 }
 
 .wrapper {
-    width: 100vw;
     font-family: 'Open Sans', sans-serif;
     padding: 50px 10px;
 }
@@ -366,7 +365,6 @@ h3 {
 }
 
 .transaction-item_amount {
-    width: 110px;
     text-align: right;
 }
 .transaction-item_amount span {
@@ -385,10 +383,6 @@ h3 {
     text-indent: -15px;
 }
 
-/* Hide + and - */
-.transaction-item_amount .amount::first-letter {
-    color: transparent !important;
-}
 
 .cards {
     margin-top: 50px;
