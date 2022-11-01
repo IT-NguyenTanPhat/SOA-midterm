@@ -25,7 +25,7 @@
         </button>
     </div>
     {{/if}}
-    <a href='/auth/logout' class='btn btn-light float-right mr-5'>Log out</a>
+    <a href='/auth/logout' class='btn btn-primary float-right mr-5'>Log out</a>
     <div class='app-wrapper'>
 
         <!--Wallet-->
@@ -66,5 +66,9 @@
         $('.money').each(function(index) {
             $(this).html($(this).html().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.') + ' ₫');
         })
+
+        setTimeout(function() {
+            $('.alert').hide();
+        }, 4000);
     })
 </script>

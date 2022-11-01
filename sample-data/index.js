@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-const { userModel, studentModel } = require('../src/models');
+const { userModel, studentModel, transactionModel } = require('../src/models');
 const users = require('./users-data');
 const students = require('./students-data');
 
@@ -15,6 +15,7 @@ const importData = async () => {
 
 const deleteData = async () => {
 	await userModel.deleteMany();
+	await transactionModel.deleteMany();
 	await studentModel.deleteMany();
 };
 

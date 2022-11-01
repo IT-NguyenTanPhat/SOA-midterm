@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const catchAsync = require('../utils/catchAsync');
 const customError = require('../utils/customError');
 const {
-	transactionService,
-	studentService,
-	userService,
-	otpService,
+    transactionService,
+    studentService,
+    userService,
+    otpService,
 } = require('../services');
 
 const transactionController = {
@@ -30,7 +30,7 @@ const transactionController = {
         try {
             await session.startTransaction();
 
-            const targetStudent = await studentService.get({ student });
+            const targetStudent = await studentService.get({ _id: student });
 
             if (!targetStudent) {
                 throw customError(500, 'Student not found');
@@ -41,7 +41,7 @@ const transactionController = {
             }
 
             if (user.balance < amount) {
-                throw customError(400, 'Not enough money');
+                throw customError(400, 'Invalid balance');
             }
 
             await userService.update(
@@ -63,7 +63,7 @@ const transactionController = {
             await session.abortTransaction();
             await transactionService.delete({ _id: transactionId });
 
-            req.flash('error', 'Something went wrong!');
+            req.flash('error', err.message || 'Something went wrong!');
             res.redirect('/');
         } finally {
             session.endSession();
