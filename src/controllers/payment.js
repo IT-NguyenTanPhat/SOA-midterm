@@ -1,10 +1,10 @@
 const catchAsync = require('../utils/catchAsync');
 const {
-    transactionService,
-    studentService,
-    userService,
-    otpService,
-    mailService,
+	transactionService,
+	studentService,
+	userService,
+	otpService,
+	mailService,
 } = require('../services');
 
 const paymentController = {

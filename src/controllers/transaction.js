@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const catchAsync = require('../utils/catchAsync');
 const customError = require('../utils/customError');
 const {
-    transactionService,
-    studentService,
-    userService,
-    otpService,
+	transactionService,
+	studentService,
+	userService,
+	otpService,
 } = require('../services');
 
 const transactionController = {
