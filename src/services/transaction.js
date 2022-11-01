@@ -38,14 +38,12 @@ const TransactionService = {
 		return await transactionModel.create(payloads);
 	},
 
-	update: async (id, payloads) => {
-		return await transactionModel.findOneAndUpdate({ _id: id }, payloads, {
-			new: true,
-		});
+	update: async (condition, payloads) => {
+		return await transactionModel.findOneAndUpdate(condition, payloads);
 	},
 
-	delete: async (id) => {
-		return await transactionModel.findOneAndDelete({ _id: id });
+    delete: async (condition) => {
+		return await transactionModel.findOneAndDelete(condition);
 	},
 };
 

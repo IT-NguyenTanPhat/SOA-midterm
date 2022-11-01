@@ -1,4 +1,4 @@
-const { otpService } = require('../services');
+const { otpService, userService, mailService } = require('../services');
 const catchAsync = require('../utils/catchAsync');
 
 const otpController = {
@@ -51,6 +51,7 @@ const otpController = {
 			content: `<p>Please enter this otp to execute your transaction ${otp}</p>`,
 		});
 	}),
+
 };
 
 module.exports = otpController;

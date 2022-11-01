@@ -19,12 +19,15 @@ router.get(
     '/',
     authController.forLoggedIn,
     catchAsync(async (req, res, next) => {
+        global.myNumber = 5; 
         const user = await userService.get({ _id: req.user._id });
         const error = req.flash('error') || '';
+        const success = req.flash('success') || '';
         const transactions = await transactionService.getMany({
             transactor: req.user._id,
+            status: "Success"
         });
-        res.render('index', { title: 'Ibanking', user, transactions, error });
+        res.render('index', { title: 'Ibanking', user, transactions, error, success });
     })
 );
 
