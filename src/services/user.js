@@ -14,6 +14,7 @@ const UserService = {
 	update: async (conditions, payloads) => {
 		return await userModel.findOneAndUpdate(conditions, payloads, {
 			runValidators: true,
+			new: true,
 		});
 	},
 
