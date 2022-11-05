@@ -10,18 +10,19 @@
 2. After signing in, you will be redirected to the home page
 3. Here, you will see
 
-- Information about your account: name, phone, email, current balance
-- Pay tuition button
-- Logout button
+* Information about your account: name, phone, email, current balance
+* Pay tuition button
+* Logout button
 
-  4.a. When you click "Logout button", you will be redirected to the login page
-  4.b. When you click "Pay tuition button", you will be redirected to the payment page
+4. You have 2 options
+* Case "Logout button", you will be redirected to the login page
+* Case "Pay tuition button", you will be redirected to the payment page
 
 5. In this page, you will have 4 steps to create payment
-   5.1. You will see your information again
-   5.2. Enter a student ID, then his/her name and tuition will automatically be filled in
-   5.3. You will check some transaction information like transactor, balance, student name, tuition fee
-   5.4. Once you click "Pay button", you will receive an OTP code in your email and be redirected to the OTP page after some seconds
+* 5.1. You will see your information again
+* 5.2. Enter a student ID, then his/her name and tuition will automatically be filled in
+* 5.3. You will check some transaction information like transactor, balance, student name, tuition fee
+* 5.4. Once you click "Pay button", you will receive an OTP code in your email and be redirected to the OTP page after some seconds
 6. In here, you will enter your OTP code in order to make payment or you can obtain another one
 7. Once you enter your OTP code and click "Submit", if your OTP code is valid, your transaction will be executed and
    you will receive a email notification to confirm that your payment has been successful
