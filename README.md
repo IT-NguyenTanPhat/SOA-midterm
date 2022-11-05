@@ -4,7 +4,7 @@
 - Open the terminal, run "npm run create-sample-data <options>" with options are: --import, --delete (if you run without option default it will reset data)
 - Open localhost:3000
 
-# Basic flow of the
+# Basic flow of the app
 
 1. The first time you access the home page, you will be redirected to the login page, and you have to sign in to use the app
 2. After signing in, you will be redirected to the home page
