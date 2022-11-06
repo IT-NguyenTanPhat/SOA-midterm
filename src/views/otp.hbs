@@ -1,4 +1,17 @@
 <div class='container-fluid'>
+    {{#if error}}
+    <div class='mt-3 alert alert-danger alert-dismissible fade show' style='max-width: 30%' role='alert'>
+        <strong>{{error}}</strong>
+        <button
+            type='button'
+            class='close'
+            data-dismiss='alert'
+            aria-label='Close'
+        >
+            <span aria-hidden='true'>&times;</span>
+        </button>
+    </div>
+    {{/if}}
     <a href='/' class='btn btn-primary mt-4 ml-3 float-left'>Home</a>
     <div class='row justify-content-center'>
         <div

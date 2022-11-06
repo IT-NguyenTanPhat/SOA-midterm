@@ -8,7 +8,8 @@ const catchAsync = require('../utils/catchAsync');
 
 const otpController = {
     otpView: function (req, res, next) {
-        res.render('otp', { title: 'Verify OTP' });
+        const error = req.flash('error');
+        res.render('otp', { title: 'Verify OTP', error });
     },
 
     verifyOtp: catchAsync(async (req, res, next) => {

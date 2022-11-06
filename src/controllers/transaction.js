@@ -6,6 +6,7 @@ const {
     studentService,
     userService,
     otpService,
+    mailService,
 } = require('../services');
 
 const transactionController = {
@@ -16,7 +17,7 @@ const transactionController = {
         const transaction = await transactionService.get(
             { _id: transactionId },
             '-__v',
-            false
+            true
         );
 
         if (!transaction) {
@@ -57,6 +58,26 @@ const transactionController = {
             );
 
             session.commitTransaction();
+            await mailService.sendMail({
+                to: user.email,
+                subject:
+                    'Paid tuition successfully. Here is your receipt',
+                content: `<h1>Pay tuition</h1>
+                <ul>
+                    <li>
+                        <p>Transactor: ${user.name} - ${user.email}</p>
+                    </li>
+                    <li>
+                        <p>Student ID: ${student.studentId}</p>
+                    </li>
+                    <li>
+                        <p>Student name: ${student.name}</p>
+                    </li>
+                    <li>
+                        <p>Amount: ${amount}</p>
+                    </li>
+                </ul>`,
+            });
             req.flash('success', 'Paid tuition successfully');
             res.redirect('/');
         } catch (err) {

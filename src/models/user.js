@@ -37,7 +37,6 @@ const User = new Schema({
 User.pre('save', async function (next) {
 	// 12 is salt length
 	this.password = await bcrypt.hash(this.password, 12);
-
 	next();
 });
 
