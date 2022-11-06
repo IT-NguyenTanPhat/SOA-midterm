@@ -36,7 +36,7 @@
 | ------------ | :----: | ----------------------------------------------------------------------------: |
 | /            |  GET   |                                                              Render home page |
 | /auth/login  |  GET   |                                        Render login page (for anonymous user) |
-| /auth/login  |  GET   |                                             Handle login (for anonymous user) |
+| /auth/login  |  POST  |                                             Handle login (for anonymous user) |
 | /auth/logout |  GET   |                                                                        Logout |
 | /payment     |  GET   |                                                           Render payment page |
 | /payment     |  POST  | handle payment request,create pending transaction, send otp to client's email |
