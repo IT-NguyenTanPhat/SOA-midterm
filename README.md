@@ -33,7 +33,7 @@
 - Endpoints which are not mentioned who is allowed to access are for signed-in user
 
 | Endpoint     | Method |                                                                   Description |
-| ------------ | :----: | ----------------------------------------------------------------------------: |
+| ------------ | :----: |: ---------------------------------------------------------------------------- |
 | /            |  GET   |                                                              Render home page |
 | /auth/login  |  GET   |                                        Render login page (for anonymous user) |
 | /auth/login  |  POST  |                                             Handle login (for anonymous user) |
