@@ -1,7 +1,8 @@
 # Steps to run our app
 
 - First, you need to be ensure that Nodejs has been installed in your computer
-- Open the terminal, run "npm run create-sample-data <options>" with options are: --import, --delete (if you run without option default it will reset data)
+- Open the terminal, run "npm install" to install all dependencies
+- Next, run "npm run create-sample-data <options>" with options are: --import, --delete (if you run without option default it will reset data)
 - Open localhost:3000
 
 # Basic flow of the app
